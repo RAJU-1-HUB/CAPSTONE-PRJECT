@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login |UrbanNest</title>
+    <link rel="stylesheet" href="LOGIN PAGE.css">
+</head>
+<body class="login-body">
+
+<header>
+    <div class="logo"></div>
+</header>
+<section class="login-container">
+
+    <div class="login-box">
+
+        <h2>Welcome Back</h2>
+        <p>Please login to continue</p>
+
+        <form>
+
+            <div class="input-box">
+                <input type="text" required>
+                <label>Username</label>
+            </div>
+
+            <div class="input-box">
+                <input type="password" required>
+                <label>Password</label>
+            </div>
+
+            <button class="login-btn">LOGIN</button>
+
+            <div class="extra">
+                <a href="FORGOT PASSWORD.html">Forgot Password?</a>
+                <a href="create account.html">Create Account</a>
+                <a href="index.html">Back To Home</a>
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+<div class="explosion" id="explosion"></div>
+
+<script>
+document.querySelector(".login-btn").addEventListener("click", function(e){
+    e.preventDefault(); // stop form submit for demo
+
+    const explosion = document.getElementById("explosion");
+
+    explosion.classList.add("active");
+
+    setTimeout(() => {
+        alert("Login Successful 🚀");
+        
+    }, 1200);
+});
+</script>
+</body>
+</html>
