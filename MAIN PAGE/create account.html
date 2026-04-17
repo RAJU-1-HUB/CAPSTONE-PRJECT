@@ -3,6 +3,13 @@
 <head>
     <title>Create Account | UrbanNest</title>
     <link rel="stylesheet" href="LOGIN PAGE.css">
+    <style>
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+    </style>
 </head>
 
 <body class="login-body">
@@ -14,26 +21,30 @@
         <h2>Create Account</h2>
         <p>Fill details to register</p>
 
-        <form>
+        <form id="createAccountForm">
 
             <div class="input-box">
-                <input type="text" required>
+                <input type="text" id="name" required>
                 <label>Full Name</label>
+                <div class="error" id="nameError"></div>
             </div>
 
             <div class="input-box">
-                <input type="email" required>
+                <input type="email" id="email" required>
                 <label>Email</label>
+                <div class="error" id="emailError"></div>
             </div>
 
             <div class="input-box">
-                <input type="password" required>
+                <input type="password" id="password" required>
                 <label>Password</label>
+                <div class="error" id="passwordError"></div>
             </div>
 
             <div class="input-box">
-                <input type="password" required>
+                <input type="password" id="confirmPassword" required>
                 <label>Confirm Password</label>
+                <div class="error" id="confirmError"></div>
             </div>
 
             <button class="login-btn">Register</button>
@@ -48,6 +59,78 @@
     </div>
 
 </section>
+
+<script>
+function isValidName(name) {
+    for (let i = 0; i < name.length; i++) {
+        let char = name[i];
+        if (!((char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z') || char === ' ')) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function isValidPassword(pwd) {
+    if (pwd.length < 8) return false;
+    let hasUpper = false;
+    let hasDigit = false;
+    let hasSpecial = false;
+    const specials = '@$!%*?&';
+    for (let i = 0; i < pwd.length; i++) {
+        let char = pwd[i];
+        if (char >= 'A' && char <= 'Z') hasUpper = true;
+        if (char >= '0' && char <= '9') hasDigit = true;
+        if (specials.includes(char)) hasSpecial = true;
+    }
+    return hasUpper && hasDigit && hasSpecial;
+}
+
+function isValidEmail(email) {
+    return email.includes('@') && email.includes('.') && email.indexOf('@') < email.lastIndexOf('.');
+}
+
+document.getElementById('createAccountForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    document.getElementById('nameError').textContent = '';
+    document.getElementById('emailError').textContent = '';
+    document.getElementById('passwordError').textContent = '';
+    document.getElementById('confirmError').textContent = '';
+    
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    
+    let isValid = true;
+    
+    if (!isValidName(name)) {
+        document.getElementById('nameError').textContent = 'Name should not contain special characters.';
+        isValid = false;
+    }
+    
+    if (!isValidEmail(email)) {
+        document.getElementById('emailError').textContent = 'Please enter a valid email.';
+        isValid = false;
+    }
+    
+    if (!isValidPassword(password)) {
+        document.getElementById('passwordError').textContent = 'Password must be at least 8 characters with 1 uppercase, 1 number, and 1 special character.';
+        isValid = false;
+    }
+    
+    if (password !== confirmPassword) {
+        document.getElementById('confirmError').textContent = 'Passwords do not match.';
+        isValid = false;
+    }
+    
+    if (isValid) {
+        alert('Account created successfully!');
+
+    }
+});
+</script>
 
 </body>
 </html>
